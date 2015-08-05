@@ -15,7 +15,7 @@
 ##################################################################################
 
 # Quick place to set the script's version number (adjusts the header version too)
-SCRIPTVERSION="v2.0.1"
+SCRIPTVERSION="v2.0.2"
 
 # Variable for identifying the date / time of updates
 UPDATE=$(date "+%m.%d.%y @ %H:%M")
@@ -66,10 +66,10 @@ if [[ "$ENTIREVERSION" != "$CURRENT" ]]; then
 	else
 		sed -i "s/\(\$"$APP"_patch =\).*/\1 $PATCHVERSION;/" ./variables.php
 	fi
-	# If the application is cPanel we ensure that the fourth digit of the version string stored in $BUILDVERSION
-	# is written to the appropriate variable in variables.php.
-	if [[ $APP == "cpanel" ]]; then
-		sed -i "s/\(\$cpanel_build =\).*/\1 $BUILDVERSION;/" ./variables.php
+	# If the application is cPanel or Magento we ensure that the fourth digit of the version string stored 
+	# in $BUILDVERSION is written to the appropriate variable in variables.php.
+	if [[ $APP == "cpanel" ]] || [[ $APP == "magento" ]]; then
+		sed -i "s/\(\$"$APP"_build =\).*/\1 $BUILDVERSION;/" ./variables.php
 	fi
 	# Write out the date string that the application was updated to the variables.php file.
         sed -i "s/\(\$"$APP"_update =\).*/\1 \'$UPDATE\';/" ./variables.php
